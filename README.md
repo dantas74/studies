@@ -23,7 +23,7 @@ hope you enjoy and also can have an idea on making your on stack
   - AWS
   - Prometheus
 
-### Autor
+### Author
 
 <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/81092363?v=4" width="100px;" alt=""/>
 
