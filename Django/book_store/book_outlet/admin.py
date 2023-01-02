@@ -1,3 +1,12 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+class BookAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        'slug': ('title',)
+    }
+
+
+admin.site.register(models.Book, BookAdmin)
