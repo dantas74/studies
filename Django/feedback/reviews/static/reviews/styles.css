@@ -66,3 +66,8 @@ button:active {
 .errors label {
     color: #680000;
 }
+
+#thank-you,
+#review-detail {
+    padding: 0 1.2rem;
+}
