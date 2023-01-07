@@ -37,7 +37,7 @@ class Post(models.Model):
     title = models.CharField(max_length=60)
     excerpt = models.CharField(max_length=255)
     content = models.TextField(validators=[MinLengthValidator(10)])
-    image = models.CharField(max_length=48)
+    image = models.ImageField(upload_to='posts/images', null=True)
     date = models.DateField(auto_now=True)
     slug = models.SlugField(unique=True)
 
@@ -46,3 +46,18 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}, {self.excerpt[0:11]}...'
+
+
+class Comment(models.Model):
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+    user_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    text = models.TextField(max_length=480)
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+
+    def __str__(self):
+        return f'{self.user_name}, {self.text[0:11]}...'

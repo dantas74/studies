@@ -121,7 +121,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 # https://docs.djangoproject.com/en/4.1/topics/files/
 MEDIA_ROOT = BASE_DIR / 'uploads'
-MEDIA_URL = '/user-media/'
+MEDIA_URL = 'user-media/'
 
 # Session
+# https://docs.djangoproject.com/en/4.1/topics/http/sessions/
 SESSION_COOKIE_AGE = 120
