@@ -8,20 +8,25 @@ hope you enjoy and also can have an idea on making your on stack
 
 ## Technologies
 
-- Development
-  - Django
-  - Python
-  - Bootstrap
-- Operations
-  - Docker
-  - Kubernetes
-  - Ansible
-  - Terraform
-- DevOps
-  - Argo CD
-  - GitHub Actions
-  - AWS
-  - Prometheus
+- Python
+- Bash
+- Postgresql
+- SQL
+- Jenkins
+- Slack
+- Docker
+- Kubernetes
+- Linux
+- Terraform
+- Ansible
+- Prometheus
+- Elastic Stack
+- Jaeger
+- Argo CD
+- Istio
+- Hashicorp Vault
+- AWS
+- Hacking
 
 ### Author
 
