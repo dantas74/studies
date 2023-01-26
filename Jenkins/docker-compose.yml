@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  jenkins:
+    image: jenkins/jenkins
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - "jenkins-data:/var/jenkins_home"
+    networks:
+      - jenkins-net
+
+  remote-host:
+    build:
+      context: ./centos7
+      dockerfile: Dockerfile
+    container_name: remote-host
+    networks:
+      - jenkins-net
+
+networks:
+  jenkins-net: { }

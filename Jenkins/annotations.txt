@@ -1,0 +1,14 @@
+## Plugins to Install
+SSH
+
+## Configure SSH plugin with current setup
+1. Manage Jenkins -> Credentials -> ADd new credential
+Paste private-key.pem content to a new credentials like remote-host-ssh
+
+2. Manage Jenkins -> Configure System -> SSH configuration
+Hostname: remote-host
+Port: 22
+Credentials: remote-host-ssh
+
+## To run ssh script in remote-host
+Simply add a step in the job and insert your bash script
