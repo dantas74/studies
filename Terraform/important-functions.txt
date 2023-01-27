@@ -1,0 +1,14 @@
+base64encode(string) -> Will return the encoded string
+base64edecode(string) -> Will return the decoded string
+chunklist(list, num) -> Will make smaller lists, with length of num, slicing the list param
+coalesce(*args) -> Will return the first non empty string
+coalescelist(*args) -> Will return the first non empty list
+compact(list) -> Will remove all empty string elements in the list
+concat(*args) -> Will return all lists provided into a single one
+contains(list, value) -> Will return true if value is present in list
+element(list, index) -> Will return the element in the provided index, if provided out of range, returns the first value
+uuid() -> Will return a random uuid
+timestamp() -> Will return current timestamp
+length(list) -> Will return the length of the list
+split(separator, string) -> Will return a list, with the values being the strings splitted by the separator
+replace(string, value_to_replace, value_to_insert) -> Will return the string with all ocurrences of value_to_replace being substituted by value_to_insert
