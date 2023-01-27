@@ -7,17 +7,31 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "jenkins-data:/var/jenkins_home"
+      - jenkins-data:/var/jenkins_home
     networks:
       - jenkins-net
 
   remote-host:
     build:
-      context: ./centos7
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./centos7/Dockerfile
     container_name: remote-host
     networks:
       - jenkins-net
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - jenkins-net
+
+volumes:
+  jenkins-data: { }
+  db-data: { }
 
 networks:
   jenkins-net: { }

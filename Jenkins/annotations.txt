@@ -12,3 +12,6 @@ Credentials: remote-host-ssh
 
 ## To run ssh script in remote-host
 Simply add a step in the job and insert your bash script
+
+## To run mysql backup
+Simply add a step that runs the necessary commands, and add parameters to AMAZON_BUCKET, DB_NAME and DB_HOST, and credentials to AMAZON_SECRET and DB_PASSWORD
