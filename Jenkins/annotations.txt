@@ -1,5 +1,7 @@
 ## Plugins to Install
 SSH
+Ansible
+AnsiColor
 
 ## Configure SSH plugin with current setup
 1. Manage Jenkins -> Credentials -> ADd new credential
@@ -15,3 +17,12 @@ Simply add a step in the job and insert your bash script
 
 ## To run mysql backup
 Simply add a step that runs the necessary commands, and add parameters to AMAZON_BUCKET, DB_NAME and DB_HOST, and credentials to AMAZON_SECRET and DB_PASSWORD
+
+## To execute Ansible playbooks from Jenkins
+Add a build step that is playbook path, set the hosts and credentials and select if we want sudo or not
+
+## To populate database
+Enter mysql container and copy both the populate-db.sh and people.txt and run the script
+
+## TO run Jenkins to create template in web server
+Add a build parameter of AGE (choices: [20, 21, 22, 23, 24, 25]) and add it to the ansible build step as a environment var

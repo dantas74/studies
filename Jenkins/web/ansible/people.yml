@@ -1,0 +1,7 @@
+- hosts: web01
+  become: yes
+  tasks:
+    - name: Transfer template to web server
+      template:
+        src: templates/table.js
+        dest: /var/www/html/index.php

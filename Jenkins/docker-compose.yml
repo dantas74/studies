@@ -2,12 +2,15 @@ version: "3.8"
 
 services:
   jenkins:
-    image: jenkins/jenkins
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     container_name: jenkins
     ports:
       - "8080:8080"
     volumes:
       - jenkins-data:/var/jenkins_home
+      - $PWD/ansible:/var/jenkins_home/ansible
     networks:
       - jenkins-net
 
@@ -16,6 +19,16 @@ services:
       context: .
       dockerfile: ./centos7/Dockerfile
     container_name: remote-host
+    networks:
+      - jenkins-net
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: web
+    ports:
+      - "80:80"
     networks:
       - jenkins-net
 
