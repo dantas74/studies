@@ -1,0 +1,12 @@
+[aws:vars]
+ansible_user=ec2-user
+
+[gcp:vars]
+ansible_user=root
+
+[aws]
+aws01 3.131.153.192
+aws02 18.189.31.112
+
+[gcp]
+gcp01 34.66.27.10
