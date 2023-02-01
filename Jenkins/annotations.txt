@@ -3,6 +3,9 @@ SSH
 Ansible
 AnsiColor
 Role-based Authorization Strategy
+Maven Integration Plugin
+Git plugin
+Git client
 
 ## Configure Email plugin with AWS Simple Email Service
 1. Add a domain or email address in AWS
@@ -25,6 +28,10 @@ Paste private-key.pem content to a new credentials like remote-host-ssh
 Hostname: remote-host
 Port: 22
 Credentials: remote-host-ssh
+
+## Configure Maven plugin
+1. Manage Jenkins -> Global Tool Configuration -> Maven
+Simply add the name and the version to install
 
 ## To run ssh script in remote-host
 Simply add a step in the job and insert your bash script
@@ -55,3 +62,15 @@ With parameters -> send a request to jenkins server specifying the job and the p
 
 ## To send emails as notifications for your jobs
 Add a post-build step that sends to selected recipients the email
+
+## A maven project example from git
+1. Start a new job
+2. Set the git config to Maven project (if you don't have one just search for sample maven app on google)
+3. Add two maven target step
+4. Insert into the first maven build step: "-B -DskipTests clean package"
+5. Insert into the second maven build step: "test"
+6. Add a new env var: "_JAVA_OPTIONS => -Djdk.net.URL.ClassPath.disableClassPathURLCheck=true"
+7. Add a shell script: "java -jar $JENKINS_WORKSPACE/target/artifact-name.jar"
+8. Add a post build step (only success) of archiving artifacts with the input of: "target/*.jar"
+9. Add a post build step of publish the JUnit results with the input of: "target/surefire-reports/*.xml"
+10. Add a posst build step of send email notification and put your email
