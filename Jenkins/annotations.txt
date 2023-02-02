@@ -4,8 +4,9 @@ Ansible
 AnsiColor
 Role-based Authorization Strategy
 Maven Integration Plugin
-Git plugin
-Git client
+Git Plugin
+Git Client
+Job DSL Plugin
 
 ## Configure Email plugin with AWS Simple Email Service
 1. Add a domain or email address in AWS
@@ -74,3 +75,14 @@ Add a post-build step that sends to selected recipients the email
 8. Add a post build step (only success) of archiving artifacts with the input of: "target/*.jar"
 9. Add a post build step of publish the JUnit results with the input of: "target/surefire-reports/*.xml"
 10. Add a posst build step of send email notification and put your email
+
+## To disable DSL block of running on local files
+1. Manage Jenkins -> Configure Global Security -> CSRF Protection
+Uncheck the "Enable script security jor Job DSL scripts" option
+
+## Auto create Jobs using DSL by pushing to Gitlab
+1. Create a repository
+2. Create your jobs inside the root folder
+3. Create a post-receive hook to start a the dsl creator job
+4. Configure the dsl creator to the correct scm
+5. Configure the dsl creator to get local files to create dsl
