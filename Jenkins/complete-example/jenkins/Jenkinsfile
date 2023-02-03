@@ -1,0 +1,76 @@
+def remote
+
+pipeline {
+  agent none
+
+  parameters{
+    string name: 'REMOTE_NAME', defaultValue: '', description: 'The remote name, usually is the same as hostname'
+    string name: 'REMOTE_HOST', defaultValue: '', description: 'The hostname or IP address of the remote host'
+    string name: 'REMOTE_USER', defaultValue: '', description: 'The username to connect via SSH'
+    string name: 'REMOTE_PASSWORD', defaultValue: '', description: 'The password to connect via SSH'
+  }
+
+  stages {
+    stage('Build') {
+      agent {
+        docker {
+          image 'maven:3-alpine'
+          args '-v $HOME/.m2:/root/.m2'
+          reuseNode true
+        }
+      }
+
+      steps {
+        sh 'maven -B -DskipTests clean package'
+        sh 'docker build -t matheus-dr/java-sample-app:$BUILD_ID .'
+      }
+    }
+
+    stage('Test') {
+      agent {
+        docker {
+          image 'maven:3-alpine'
+          args '-v $HOME/.m2:/root/.m2'
+          reuseNode true
+        }
+      }
+
+      steps {
+        sh 'mvn test'
+      }
+    }
+
+    stage('Push') {
+      agent {
+        docker {
+          image 'docker:23.0.0-cli-alpine3.17'
+        }
+      }
+
+      steps {
+        withDockerRegistry([ credentialsId: 'dockerhub-account', url: '' ]) {
+          sh 'docker push matheus-dr/java-sample-app:$BUILD_ID'
+        }
+      }
+    }
+
+    stage('Deploy') {
+      agent {
+        label 'built-in'
+      }
+
+      steps {
+        script {
+          remote = [:]
+          remote.name = params.REMOTE_NAME
+          remote.host = params.REMOTE_HOST
+          remote.user = params.REMOTE_USER
+          remote.password = params.REMOTE_PASSWORD
+          remote.allowAnyHosts = true
+        }
+
+        sshCommand remote: remote, command: 'docker-compose -f /usr/app/docker-compose.yml up -d'
+      }
+    }
+  }
+}
