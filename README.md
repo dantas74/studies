@@ -9,9 +9,8 @@ hope you enjoy and also can have an idea on making your on stack
 ## Technologies
 
 - Python
+- Golang
 - Bash
-- Postgresql
-- SQL
 - Jenkins
 - Slack
 - Docker
@@ -26,7 +25,6 @@ hope you enjoy and also can have an idea on making your on stack
 - Istio
 - Hashicorp Vault
 - AWS
-- Hacking
 
 ### Author
 
