@@ -5,8 +5,8 @@ ansible_user=ec2-user
 ansible_user=root
 
 [aws]
-aws01 3.131.153.192
-aws02 18.189.31.112
+aws01 ansible_host=3.131.153.192
+aws02 ansible_host=18.189.31.112
 
 [gcp]
-gcp01 34.66.27.10
+gcp01 ansible_host=34.66.27.10
