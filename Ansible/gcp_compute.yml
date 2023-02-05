@@ -1,0 +1,13 @@
+plugin: gcp_compute
+
+Projects:
+  - <gcp-project-id>
+
+auth_kind: service_account
+service_account_file: $HOME/service-account.json
+keyed_groups:
+  - key: labels
+    prefix: label
+
+  - key: zone
+    prefix: zone
