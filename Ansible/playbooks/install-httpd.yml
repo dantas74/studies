@@ -1,0 +1,20 @@
+- name: Web server
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: Ensure Apache is at latest version
+      yum:
+        name: http
+        state: latest
+
+    - name: Ensure Apache is running
+      service:
+        name: httpd
+        state: started
+
+    - name: Ensure Apache is stopped
+      service:
+        name: httpd
+        state: stopped

@@ -1,0 +1,11 @@
+- name: Introduction
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure connection is established
+      ping:
+
+    - name: Ensure Apache is at uninstalled
+      yum:
+        name: http
+        state: absent

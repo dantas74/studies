@@ -1,0 +1,15 @@
+- name: FTP server
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    tmp_log: /tmp/connection
+  tasks:
+    - name: Create file
+      shell: test ! -f {{ tmp_log }} && touch {{ tmp_log }}
+      failed_when: no
+
+    - name: Delegate to host
+      shell: echo "delegate to . {{ inventory_hostname }} $(hostname) ." >> {{ tmp_log }}
+      delegate_to: localhost

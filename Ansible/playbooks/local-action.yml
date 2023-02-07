@@ -1,0 +1,13 @@
+- name: Local action in Ansible
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: This will create a local file
+      local_action: command touch /tmp/{{ ansible_hostname }}_local_file.txt
+
+    - name: Ensure created file is present
+      copy:
+        src: /tmp/{{ ansible_hostname }}_local_file.txt
+        dest: /var/tmp/

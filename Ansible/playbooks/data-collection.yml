@@ -1,0 +1,28 @@
+- name: Overview of Data Collections
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    cities: [ New York, London, Tokyo, Dubai ]
+    packages:
+      - wget
+      - unzip
+      - curl
+      - vim
+    # web_server: { Linux: httpd, Unix: apache2 }
+    web_server:
+      Linux: httpd
+      Unix: apache2
+  tasks:
+    - name: Getting sequence data collection 1
+      debug:
+        var: cities
+
+    - name: Getting sequence data collection 2
+      debug:
+        var: packages
+
+    - name: Getting sequence data collection 2
+      debug:
+        var: web_server

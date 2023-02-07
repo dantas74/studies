@@ -1,0 +1,9 @@
+- name: Import and Include
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - include_tasks: tasks/one.yml
+
+    - import_tasks: tasks/one.yml

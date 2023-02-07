@@ -1,0 +1,17 @@
+- name: Overview of Vars
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    my_name: matheus-dr
+    my_age: 18
+    my_height: 1.70
+    is_male: yes
+  tasks:
+    - name: Print custom var
+      debug:
+        msg:
+          - My name is {{ my_name }}
+          - I am {{ my_age }} years old
+          - And I'm {{ my_height }} long, my gender is male - {{ is_male }}

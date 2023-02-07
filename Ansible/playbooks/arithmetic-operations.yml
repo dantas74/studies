@@ -1,0 +1,25 @@
+- name: Overview of Arithmetic operations
+  hosts: localhost
+  vars_prompt:
+    - name: x
+      prompt: Please enter value of X
+      private: no
+
+    - name: y
+      prompt: Please enter value of Y
+      private: no
+  vars:
+    a: 10
+    b: 20
+  tasks:
+    - name: Operations in vars
+      debug:
+        msg:
+          - 'Value of A is: {{ a }}'
+          - 'Value of B is: {{ b }}'
+          - 'A + B = {{ a + b }}'
+          - 'A - B = {{ a - b }}'
+          - 'A * B = {{ a * b }}'
+          - 'A / B = {{ a / b }}'
+          - 'String: X + Y = {{ x + y }}'
+          - 'Integer: X + Y = {{ x|int + y|int }}'

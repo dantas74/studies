@@ -1,0 +1,29 @@
+- name: Overview of Logic operators
+  hosts: localhost
+  vars:
+    a: HELLO
+    b: 10
+    c: 20
+    d: hello
+    e:
+      - 1
+      - 5
+      - 9
+      - 10
+      - 15
+      - 100
+    f: /var/projects/my-stack/Ansible/playbooks/membership-operators.yml
+    g: /var/projects/my-stack/Ansible
+    x: yes
+    y: no
+    z: no
+    o: yes
+  tasks:
+    - name: Operations in vars
+      debug:
+        msg:
+          - 'X and Y: {{ x and y }}'
+          - 'X and O: {{ x and o }}'
+          - 'X or Y: {{ x or y }}'
+          - 'Y or Z: {{ y or z }}'
+          - 'X or Y and O: {{ x or y and O }}'

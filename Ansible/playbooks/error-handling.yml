@@ -1,0 +1,35 @@
+- name: Error handling, Blocks and Rescue
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - block:
+        - name: List all files in /home
+          shell: ls -l /homee
+          register: home_out
+          ignore_errors: yes
+
+        - debug:
+            var: home_out
+          failed_when: home_out.rc == 2
+
+      rescue:
+        - debug:
+            msg: Something went wrong, cleaning up...
+
+      always:
+        - debug:
+            msg: Always being executed
+
+    - block:
+        - name: List all files in /root
+          shell: ls -l /root
+          become: yes
+          register: root_out
+
+        - debug:
+            var: root_out
+
+      become: yes
+      ignore_errors: yes

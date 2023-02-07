@@ -1,0 +1,31 @@
+- name: Handlers
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: Ensure Apache is at latest version
+      yum:
+        name: http
+        state: latest
+      notify:
+        - Ensure Apache is running
+
+    - name: Ensure index.html is correct
+      template:
+        src: files/index.html.j2
+        dest: /usr/share/httpd/noindex/index.html
+      notify:
+        - Ensure Apache is restarted
+
+  handlers:
+    - name: Ensure Apache is running
+      service:
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Ensure Apache is restarted
+      service:
+        name: httpd
+        state: restarted

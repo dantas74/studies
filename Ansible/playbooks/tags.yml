@@ -1,0 +1,40 @@
+# To execute only the first two tasks run ansible-playbook playbooks/tags.yml (--tags first,second || --tags common)
+# To execute all tasks without the first tag ansible-playbook playbooks/tags.yml --skip-tags first
+- name: Tags
+  hosts: localhost
+  tasks:
+    - name: Working with tags 1
+      debug:
+        msg:
+          - Hi, from debug message
+      tags:
+        - first
+        - common
+
+    - name: Working with tags 2
+      debug:
+        msg:
+          - Hi, from debug message
+      tags:
+        - second
+        - common
+
+    - name: Working with tags 3
+      debug:
+        msg:
+          - Hi, from debug message
+
+    - name: Working with tags 4
+      debug:
+        msg:
+          - Hi, from debug message
+
+    - name: Working with tags 5
+      debug:
+        msg:
+          - Hi, from debug message
+
+    - name: Working with tags 6
+      debug:
+        msg:
+          - Hi, from debug message

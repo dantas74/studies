@@ -1,0 +1,30 @@
+- name: Overview of Debug
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: Print one line
+      debug:
+        msg: Custom message from debug
+
+    - name: Print multiple lines
+      debug:
+        msg:
+          - First line
+          - Second line
+
+    - name: Print ip of machine
+      debug:
+        msg:
+          - The hostname of machine is {{ inventory_host }}
+          - System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}
+
+    - name: Print inventory hostname
+      debug:
+        var: inventory_hostname
+
+    - name: Verbosity (only runs when verbosity is 2 or more)
+      debug:
+        msg: Testing
+        verbosity: 2

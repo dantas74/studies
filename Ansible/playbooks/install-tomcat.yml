@@ -1,0 +1,45 @@
+- name: Install and configure Tomcat
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    tomcat_port: 8090
+  tasks:
+    - name: Ensure all packages are updated
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Ensure Java is installed
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+
+    - name: Ensure Java 8 is default installation
+      alternatives:
+        name: java
+        link: /bin/java
+        path: /usr/bin/jvm/java-1.8.0.302.b08-0.amzn2.0.1.x86_64/jre/bin/java
+
+    - name: Ensure Tomcat is downloaded
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz
+        dest: /usr/local
+
+    - name: Ensure tomcat is extracted
+      unarchive:
+        src: /usr/local/apache-tomcat-9.0.71.tar.gz
+        dest: /usr/local
+        remote_src: yes
+
+    - name: Ensure right name in tomcat package
+      command: mv /usr/local/apache-tomcat-9.0.71 /usr/local/tomcat
+
+    - name: Ensure correct configuration
+      template:
+        src: files/server.xml.j2
+        dest: /usr/local/tomcat/conf/server.xml
+
+    - name: Ensure tomcat is started
+      shell: nohup /usr/local/tomcat/startup.sh &

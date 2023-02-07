@@ -1,0 +1,68 @@
+- name: Loops
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    letters: [ a, b, c, d, e ]
+    numbers: [ 1, 2, 3, 4, 5 ]
+    packages_to_install:
+      - gettext-level
+      - openssl-devel
+      - perl-CPAN
+      - perl-devel
+      - zlib-devel
+      - unzip
+      - curl
+      - wget
+  tasks:
+    - name: Ensure some users exist
+      user:
+        name: '{{ item }}'
+        state: present
+        groups: users
+      loop:
+        - test-user-1
+        - test-user-2
+
+    - name: Ensure multiple users exist
+      user:
+        name: '{{ item.name }}'
+        state: present
+        groups: '{{ item.groups }}'
+      loop:
+        - name: test-user-3
+          groups: users
+        - name: test-user-4
+          groups: root
+
+    - name: Loop over multiple sequences
+      debug:
+        var: item
+      loop: '{{ letters|zip(numbers)|list }}'
+
+    - name: Loop with indexes
+      debug:
+        msg: '{{ index }} - {{ item }}'
+      loop: '{{ letters|flatten(levels=1) }}'
+      loop_control:
+        index_var: index
+
+    - name: Random element of a sequence
+      debug:
+        msg: '{{ letters|random }}'
+
+    - name: Ensure apache is running
+      service:
+        name: httpd
+        state: started
+      register: result
+      until: result.changed = True
+      retries: 7
+      delay: 4
+
+    - name: Ensure packages are not present
+      yum:
+        name: '{{ item }}'
+        state: absent
+      loop: '{{ packages_to_install }}'

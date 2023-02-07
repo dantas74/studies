@@ -1,0 +1,46 @@
+- name: FTP server
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  vars:
+    anonymous_enable: yes
+    local_enable: yes
+    write_enable: yes
+    anon_upload_enable: yes
+  tasks:
+    - block:
+        - name: Ensure vsftp is present
+          yum:
+            name: vsftp
+            state: present
+
+        - name: Ensure backup is saved
+          copy:
+            src: /etc/vsftpd/vsftpd.conf
+            dest: /etc/vsftpd/vsftpd.conf.bkp
+            remote_src: yes
+
+        - name: Ensure configuration is present
+          template:
+            src: files/vsftpd.conf.j2
+            dest: /etc/vsftpd/vsftpd.conf
+
+        - name: This will fail
+          command: ls -l /tmp/not-exists
+
+      rescue:
+        - debug:
+            msg: Something failed, recovering vsftp.conf
+
+        - name: Ensure backup is restored
+          copy:
+            src: /etc/vsftpd/vsftpd.conf.bkp
+            dest: /etc/vsftpd/vsftpd.conf
+            remote_src: yes
+
+      always:
+        - name: Ensure vsftp is restarted
+          service:
+            name: vsftpd
+            state: restarted

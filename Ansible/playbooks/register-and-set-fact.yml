@@ -1,0 +1,15 @@
+- name: Overview of Register and set fact
+  hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: Retrieve Bash version
+      shell: bash --version
+      register: bash_ver
+
+    - set_fact:
+        bash_version: bash_ver.stdout_lines[0].split()[3]
+
+    - debug:
+        var: bash_version

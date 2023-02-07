@@ -1,0 +1,22 @@
+- name: Overview of Conditionals operators
+  hosts: localhost
+  vars:
+    x: 20
+    y: 10
+  tasks:
+    - name: Operations in vars
+      debug:
+        msg:
+          - 'X is {{ x }} and Y is {{ y }}'
+
+    - name: Operation with conditional I
+      debug:
+        msg:
+          - 'X is smaller than Y'
+      when: x < y
+
+    - name: Operation with conditional II
+      debug:
+        msg:
+          - 'X is not smaller than Y'
+      when: x >= y
