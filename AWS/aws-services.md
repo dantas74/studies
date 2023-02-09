@@ -1,0 +1,13 @@
+Categories:
+- Compute
+- Data Storage
+- Database
+- Networking & Content Delivery
+- Application Integration
+- Security
+- Cloud Management
+- Migration & Edge Computing
+- Analytics & Data Ingestion
+- Machine Learning & Artificial Intelligence
+- Developer Tools
+- Business Applications
