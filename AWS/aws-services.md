@@ -11,6 +11,8 @@ Categories:
 - Application Integration
 - Security
 - Cloud Management
+    - Auto Scaling -> Scales automatically the resources configured
+    - ELB -> Distributes traffic between available resources configured
 - Migration & Edge Computing
 - Analytics & Data Ingestion
 - Machine Learning & Artificial Intelligence
