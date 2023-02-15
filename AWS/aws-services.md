@@ -5,6 +5,9 @@ Categories:
     - ECS/EKS -> Compute Services for containerized workloads
     - Lambda -> Serverless Compute Service for event driven workloads
 - Data Storage
+    - EBS -> Virtual Hard Drives with full control of the structure
+    - EFS/FSx -> Virtual Filesystem shared between servers
+    - S3 -> Object Storage that stores without the need to control underlying system
 - Database
 - Networking & Content Delivery
     - VPC -> Create and control a virtual network in AWS
