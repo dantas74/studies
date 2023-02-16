@@ -14,6 +14,8 @@ Categories:
     - ElastiCache -> Memory Database Service with compatibility with MemcacheDB and Redis
 - Networking & Content Delivery
     - VPC -> Create and control a virtual network in AWS
+    - Route53 -> DNS Service which allows you manage and register domains
+    - CloudFront -> CDN Service which allows you serve content in the entire world
 - Application Integration
 - Security
 - Cloud Management
