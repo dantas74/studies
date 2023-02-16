@@ -9,6 +9,9 @@ Categories:
     - EFS/FSx -> Virtual Filesystem shared between servers
     - S3 -> Object Storage that stores without the need to control underlying system
 - Database
+    - RDS -> Relational Database Service managed by AWS
+    - DynamoDB -> NoSQL Database Service where you create tables to put data in it
+    - ElastiCache -> Memory Database Service with compatibility with MemcacheDB and Redis
 - Networking & Content Delivery
     - VPC -> Create and control a virtual network in AWS
 - Application Integration
