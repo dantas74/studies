@@ -1,0 +1,24 @@
+- name: Configure Kali
+  hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    apt_repositories:
+      - deb http://http.kali.org/kali kali-experimental main contrib non-free
+    apt_packages:
+      - git
+      - net-tools
+      - dnsutils
+      - gr-gsm
+  tasks:
+    - name: Ensure apt repositories are present
+      apt_repository:
+        repo: "{{ item }}"
+        state: present
+      loop: "{{ apt_repositories }}"
+
+    - name: Ensure packages are present
+      apt:
+        name: "{{ apt_packages }}"
+        update_cache: yes
+        state: present
