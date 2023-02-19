@@ -4,6 +4,11 @@ Categories:
     - EC2 -> Generic Compute Service for any kind of workload
     - ECS/EKS -> Compute Services for containerized workloads
     - Lambda -> Serverless Compute Service for event driven workloads
+    - Amplify -> Platform for managing various AWS Services for apps (for frontend and mobile apps)
+    - Elastic Beanstalk -> Platform for simplify deploy of products
+    - Lightsail -> Service with the purpose of be a simple hosting provider like WordPress
+    - AppRunner -> Service with the purpose of be a simple container hosting provider
+    - AWS Batch -> Serverless Compute Service where you define jobs to be executed in the cloud at any time
 - Data Storage
     - EBS -> Virtual Hard Drives with full control of the structure
     - EFS/FSx -> Virtual Filesystem shared between servers
@@ -14,15 +19,34 @@ Categories:
     - ElastiCache -> Memory Database Service with compatibility with MemcacheDB and Redis
 - Networking & Content Delivery
     - VPC -> Create and control a virtual network in AWS
-    - Route53 -> DNS Service which allows you manage and register domains
+    - ELB -> Distributes traffic between available resources configured
+    - Route53 -> DNS Service which allows you to manage and register domains
     - CloudFront -> CDN Service which allows you serve content in the entire world
+    - API Gateway -> API Service for building REST APIs
+    - AppSync -> API Service for creating GraphQL APIs
 - Application Integration
+    - SQS -> Queue Service used to store messages in Queue to be read by an application
+    - SNS -> Notification Service used to send messages to be immediately consumed
+    - EventBridge -> Event Bus Service, basically listen to events and trigger reactions
 - Security
+    - IAM -> Authentication Mechanism used for AWS access, for services, users and groups
+    - Cognito -> Authentication Service used for your product with built-ins integrations
 - Cloud Management
     - Auto Scaling -> Scales automatically the resources configured
-    - ELB -> Distributes traffic between available resources configured
+    - Systems Manager -> Service used to manage large fleets of servers and applications
+    - Service Catalog -> Service where you build templates to be used in the entirety of the account
+    - Proton -> Service where you build templates to be used by the account, but with serverless environments
+    - Launch Wizard -> Service managed by AWS to perform common tasks
 - Migration & Edge Computing
+    - Migration Hub -> A central place to track the overall migration process
+    - Application Migration Service -> Agent installed in server to rebuild it to the cloud
+    - Database Migration Service -> Automated Migration Service
+    - DataSync -> Synchronized on-premisses data to a Data Storage Service
+    - Transfer Family -> Maps FTP endpoints to S3 or EFS
+    - Snow Family -> Physical devices for moving data from yours servers to AWS
 - Analytics & Data Ingestion
+    - Cloudwatch -> Monitoring system for various AWS Services based on metrics and logs
+    - XRay -> Tracing Service that allows you track the entire flow of your information
 - Machine Learning & Artificial Intelligence
 - Developer Tools
 - Business Applications
