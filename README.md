@@ -12,18 +12,11 @@ hope you enjoy and also can have an idea on making your on stack
 - Golang
 - Bash
 - Jenkins
-- Slack
 - Docker
 - Kubernetes
 - Linux
 - Terraform
 - Ansible
-- Prometheus
-- Elastic Stack
-- Jaeger
-- Argo CD
-- Istio
-- Hashicorp Vault
 - AWS
 
 ### Author
