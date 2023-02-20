@@ -13,6 +13,8 @@ Categories:
     - EBS -> Virtual Hard Drives with full control of the structure
     - EFS/FSx -> Virtual Filesystem shared between servers
     - S3 -> Object Storage that stores without the need to control underlying system
+    - Redshift -> Data Warehouse Service used for storing data for analytics
+    - Lake Formation -> Data Lake Service of AWS where you store all the data in S3
 - Database
     - RDS -> Relational Database Service managed by AWS
     - DynamoDB -> NoSQL Database Service where you create tables to put data in it
@@ -31,12 +33,25 @@ Categories:
 - Security
     - IAM -> Authentication Mechanism used for AWS access, for services, users and groups
     - Cognito -> Authentication Service used for your product with built-ins integrations
+    - Cloudtrail -> Tracks API calls, identifying identities and their actions
+    - GuardDuty -> Detect suspicious behavior identified by an AI
+    - Inspector -> Scans yours instances and containers searching for security flaws and reporting it
+    - Detective -> Manages your security incidents by analysing actions per resource
+    - WAF -> Firewall Service to filter the content of traffic to reach your applications
+    - Network Firewall -> Firewall Service to filter the network of traffic of application
+    - Shield -> Protects your application from DDoS attacks
+    - Secrets Manager -> Service where you define and store credentials and who is able to access it
+    - Macie -> Service to detect sensitive data in S3 buckets via Machine Learning
 - Cloud Management
     - Auto Scaling -> Scales automatically the resources configured
     - Systems Manager -> Service used to manage large fleets of servers and applications
     - Service Catalog -> Service where you build templates to be used in the entirety of the account
     - Proton -> Service where you build templates to be used by the account, but with serverless environments
     - Launch Wizard -> Service managed by AWS to perform common tasks
+    - AWS Config -> Service where you define the patterns to be followed in your account
+    - Parameter Store -> Shared parameters across AWS account
+    - AppConfig -> Configuration of secrets of applications that can be changed
+    - CloudFormation -> Define your infrastructure in the cloud (basically the same as Terraform but AWS specific)
 - Migration & Edge Computing
     - Migration Hub -> A central place to track the overall migration process
     - Application Migration Service -> Agent installed in server to rebuild it to the cloud
@@ -47,6 +62,25 @@ Categories:
 - Analytics & Data Ingestion
     - Cloudwatch -> Monitoring system for various AWS Services based on metrics and logs
     - XRay -> Tracing Service that allows you track the entire flow of your information
+    - Kinesis -> Service of ingestion for data streams to "slow down" traffic of information
+    - Glue -> Serverless ETL Service to populate other databases
+    - EMR -> Map Reduce Service using the necessary big data solution
+    - QuickSight -> BI Service to create charts, reports and dashboards to business
+    - Athena -> Visualization Service to visualize data stored in diverse sources using SQL
+    - OpenSearch -> Search Service used to search data, fully managed by AWS
+    - Grafana -> Grafana Service with all configuration being managed by AWS
 - Machine Learning & Artificial Intelligence
+    - SageMaker -> Service that gives managed infrastructure and tools for ML models
+    - Various AI Services -> Finished AI Services for routine tasks, like image processing, text extraction etc.
 - Developer Tools
+    - Cloud9 -> Cloud based IDE, that basically produces an EC2 to write your code
+    - CodeCommit -> Git Repository managed by AWS
+    - CodeBuild -> Test and Build your code with a managed environment
+    - CodeArtifact -> Managed Repository for your build artifacts and dependencies
+    - CodeDeploy -> Service to manage your deployments of artifacts in production
+    - CodePipeline -> CI/CD tool fully integrated with other AWS services
+    - CodeGuru/DevOpsGuru -> Code Analysis Service that scans your code and make suggestions and prevents issues
 - Business Applications
+    - SES -> Email Service used for sending emails to workers of your account
+    - WorkMail -> Amazon own solution for emails
+    - HoneyCode -> No code Service for creating web and mobile apps
