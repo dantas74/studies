@@ -10,6 +10,7 @@
       - net-tools
       - dnsutils
       - gr-gsm
+      - metagoofil
   tasks:
     - name: Ensure apt repositories are present
       apt_repository:
@@ -22,3 +23,14 @@
         name: "{{ apt_packages }}"
         update_cache: yes
         state: present
+
+    - name: Ensure Sn1per repo is present
+      git:
+        repo: https://github.com/1N3/Sn1per.git
+        clone: yes
+        dest: "{{ ansible_user_dir }}"
+
+    - name: Ensure Sn1per is installed
+      shell:
+        cmd: "{{ ansible_user_dir }}/install.sh"
+        creates: /usr/bin/sniper
