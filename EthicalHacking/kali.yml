@@ -11,6 +11,14 @@
       - dnsutils
       - gr-gsm
       - metagoofil
+      - zaproxy
+      - tor
+      - ncat
+    nmap_repos:
+      - repo: https://github.com/vulnersCom/nmap-vulners.git
+        dest: /usr/share/nmap/scripts/nmap-vulners
+      - repo: https://github.com/scipag/vulscan.git
+        dest: /usr/share/nmap/scripts/vulscan
   tasks:
     - name: Ensure apt repositories are present
       apt_repository:
@@ -24,13 +32,31 @@
         update_cache: yes
         state: present
 
+    - name: Ensure nmap scripts are present
+      git:
+        repo: "{{ item.repo }}"
+        clone: yes
+        dest: "{{ item.dest }}"
+      loop: "{{ nmap_repos }}"
+
     - name: Ensure Sn1per repo is present
       git:
         repo: https://github.com/1N3/Sn1per.git
         clone: yes
-        dest: "{{ ansible_user_dir }}"
+        dest: "{{ ansible_facts['user_dir'] }}/sn1per"
 
     - name: Ensure Sn1per is installed
       shell:
-        cmd: "{{ ansible_user_dir }}/install.sh"
+        cmd: "{{ ansible_facts['user_dir'] }}/sn1per/install.sh"
         creates: /usr/bin/sniper
+
+    - name: Ensure tor browser is present
+      unarchive:
+        src: https://www.torproject.org/dist/torbrowser/12.0.3/tor-browser-linux64-12.0.3_ALL.tar.xz
+        dest: "{{ ansible_facts['user_dir'] }}/tor"
+        remote_src: yes
+
+    - name: Ensure tor is running
+      systemd:
+        name: tor
+        state: started

