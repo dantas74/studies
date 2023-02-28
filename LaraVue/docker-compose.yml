@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  composer:
+    image: composer/composer:2.5.4
+    working_dir: /var/www/app
+    entrypoint:
+      - composer
+    volumes:
+      - .:/var/www/app
+
+  artisan:
+    image: php:8.2-fpm-alpine3.17
+    working_dir: /var/www/app
+    expose:
+      - 8000
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8000:8000"
+    entrypoint:
+      - php
+      - /var/www/app/artisan
+
+  npm:
+    image: node:18.14-alpine3.17
+    working_dir: /var/www/app
+    expose:
+      - 5173
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "5173:5173"
+    entrypoint:
+      - npm
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data: { }
