@@ -1,6 +1,42 @@
 version: "3.8"
 
 services:
+  dev-app:
+    build:
+      context: .
+      dockerfile: dev-php.dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8000:8000"
+
+  dev-node:
+    build:
+      context: .
+      dockerfile: dev-node.dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "5173:5173"
+
+  mysql:
+    image: mariadb:10.8.3
+    restart: unless-stopped
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: laravel
+    volumes:
+      - db-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
   composer:
     image: composer/composer:2.5.4
     working_dir: /var/www/app
@@ -12,12 +48,8 @@ services:
   artisan:
     image: php:8.2-fpm-alpine3.17
     working_dir: /var/www/app
-    expose:
-      - 8000
     volumes:
       - .:/var/www/app
-    ports:
-      - "8000:8000"
     entrypoint:
       - php
       - /var/www/app/artisan
@@ -25,12 +57,8 @@ services:
   npm:
     image: node:18.14-alpine3.17
     working_dir: /var/www/app
-    expose:
-      - 5173
     volumes:
       - .:/var/www/app
-    ports:
-      - "5173:5173"
     entrypoint:
       - npm
 
