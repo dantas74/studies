@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [IndexController::class, 'index']);
-Route::get('/hello', [IndexController::class, 'show']);
+Route::get('/', fn(): RedirectResponse => Redirect::route('listing.index'));
+Route::get('/hello', fn(): RedirectResponse => Redirect::route('listing.index'));
 
 Route::resource('listing', ListingController::class);
 //    ->except(['helper', 'function'])
