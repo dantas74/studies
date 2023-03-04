@@ -21,7 +21,7 @@
     </div>
   </header>
 
-  <main class="container mx-auto p-4 relative">
+  <main class="container mx-auto p-4 relative w-full">
     <div
       v-if="flashSuccess"
       class="mb-4 border rounded-md shadow-sm border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900 p-2 text-center"
