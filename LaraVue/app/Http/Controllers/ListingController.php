@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -14,6 +15,7 @@ class ListingController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+        $this->authorizeResource(Listing::class, 'listing');
     }
 
     /**
@@ -33,7 +35,7 @@ class ListingController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Listing::create(
+        $request->user()->listings()->create(
             $request->validate([
                 'beds' => 'required|integer|min:0|max:20',
                 'baths' => 'required|integer|min:0|max:20',
@@ -54,14 +56,24 @@ class ListingController extends Controller
      */
     public function create(): Response|ResponseFactory
     {
+//        $this->authorize('create', Listing::class);
+
         return inertia('Listing/Create');
     }
 
     /**
      * Display the specified resource.
+     * @throws AuthorizationException
      */
     public function show(Listing $listing): Response|ResponseFactory
     {
+//        if (Auth::user()->cannot('view', $listing)) {
+//            abort(403);
+//        }
+
+        // Better alternative above in __construct
+//        $this->authorize('view', $listing);
+
         return inertia('Listing/Show', [
             'listing' => $listing
         ]);
