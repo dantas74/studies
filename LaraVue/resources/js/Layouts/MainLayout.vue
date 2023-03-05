@@ -8,7 +8,8 @@
         <div class="text-xl text-indigo-600 dark:text-indigo-300 font-bold text-center">
           <Link :href="route('listing.index')">LaraZillow</Link>
         </div>
-        <div class="text-lg">
+        <div v-if="user" class="flex items-center gap-4">
+          <div class="text-sm">{{ user.name }}</div>
           <Link
             :href="route('listing.create')"
             class="btn-primary"
@@ -16,6 +17,15 @@
             + New
             Listing
           </Link>
+          <div class="">
+            <Link :href="route('logout')" as="button" method="DELETE">
+              Logout
+            </Link>
+          </div>
+        </div>
+        <div v-else class="flex items-center gap-2">
+          <Link :href="route('user-account.create')">Register</Link>
+          <Link :href="route('login')">Sign-in</Link>
         </div>
       </nav>
     </div>
@@ -38,4 +48,5 @@ import { computed } from 'vue'
 
 const flashSuccess = computed(() => usePage().props.flash.success)
 
+const user = computed(() => usePage().props.user)
 </script>
