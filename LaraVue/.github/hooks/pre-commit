@@ -2,3 +2,4 @@
 
 sudo chown -R "$(id -u):$(id -g)" .
 docker compose run --rm --service-ports npm run fix:eslint
+docker compose run --rm --service-ports artisan ide-helper:models

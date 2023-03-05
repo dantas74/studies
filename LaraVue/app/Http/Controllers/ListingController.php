@@ -21,12 +21,18 @@ class ListingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response|ResponseFactory
+    public function index(Request $request): Response|ResponseFactory
     {
-        $listings = Listing::all();
+        $options = ['priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'];
+
+        $filters = $request->only($options);
+
+        $query = Listing::latest('created_at');
+
 
         return inertia('Listing/Index', [
-            'listings' => $listings
+            'filters' => $filters,
+            'listings' => $query->filters($filters)->paginate(10)->withQueryString()
         ]);
     }
 
