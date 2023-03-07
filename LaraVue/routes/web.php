@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn(): RedirectResponse => Redirect::route('listing.index'));
 Route::get('/hello', fn(): RedirectResponse => Redirect::route('listing.index'));
 
-Route::resource('listing', ListingController::class);
+Route::resource('listing', ListingController::class)
+    ->only(['index', 'show']);
 //    ->except(['helper', 'function'])
 //    ->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
 
@@ -32,3 +34,16 @@ Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 
 Route::resource('user-account', UserAccountController::class)
     ->only(['create', 'store']);
+
+Route::prefix('realtor')
+    ->name('realtor.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::name('listing.restore')
+            ->put('listing/{listing}/restore', [RealtorListingController::class, 'restore'])
+            ->withTrashed();
+
+        Route::resource('listing', RealtorListingController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+            ->withTrashed();
+    });
