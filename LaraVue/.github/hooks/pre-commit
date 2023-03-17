@@ -1,5 +1,6 @@
 #!/bin/bash
 
-sudo chown -R "$(id -u):$(id -g)" .
 docker compose run --rm --service-ports npm run fix:eslint
-docker compose run --rm --service-ports artisan ide-helper:models
+yes | docker compose run --rm --service-ports artisan ide-helper:models
+
+sudo chown -R "$(id -u):$(id -g)" .

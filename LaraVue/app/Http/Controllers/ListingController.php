@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -28,7 +29,11 @@ class ListingController extends Controller
 
         return inertia('Listing/Index', [
             'filters' => $filters,
-            'listings' => $query->filters($filters)->paginate(10)->withQueryString()
+            'listings' => $query
+                ->filters($filters)
+                ->withoutSold()
+                ->paginate(10)
+                ->withQueryString()
         ]);
     }
 
@@ -38,9 +43,11 @@ class ListingController extends Controller
     public function show(Listing $listing): Response|ResponseFactory
     {
         $listing->load(['images']);
+        $offer = !Auth::user() ? null : $listing->offers()->byMe()->first();
 
         return inertia('Listing/Show', [
-            'listing' => $listing
+            'listing' => $listing,
+            'offerMade' => $offer
         ]);
     }
 }

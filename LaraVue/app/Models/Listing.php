@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\ListingFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +45,16 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Listing whereStreet($value)
  * @method static Builder|Listing whereStreetNr($value)
  * @method static Builder|Listing whereUpdatedAt($value)
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, ListingImage> $images
+ * @property-read int|null $images_count
+ * @property-read Collection<int, Offer> $offers
+ * @property-read int|null $offers_count
+ * @method static Builder|Listing filters(array $filters)
+ * @method static Builder|Listing onlyTrashed()
+ * @method static Builder|Listing whereDeletedAt($value)
+ * @method static Builder|Listing withTrashed()
+ * @method static Builder|Listing withoutTrashed()
  * @mixin Eloquent
  */
 class Listing extends Model
@@ -76,7 +87,21 @@ class Listing extends Model
         return $this->hasMany(ListingImage::class);
     }
 
-    // To use is in syntax $query->filters()
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+    public function scopeWithoutSold(Builder $query): Builder
+    {
+        return $query->whereNull('sold_at');
+//            ->doesntHave('offers')
+//            ->orWhereHas(
+//                'offers',
+//                fn(Builder $query) => $query->whereNull('accepted_at')->whereNull('rejected_at')
+//            );
+    }
+
     public function scopeFilters(Builder $query, array $filters): Builder
     {
         return $query->when(
