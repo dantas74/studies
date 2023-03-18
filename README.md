@@ -9,8 +9,6 @@ hope you enjoy and also can have an idea on making your on stack
 ## Technologies
 
 - Python
-- Golang
-- Bash
 - Jenkins
 - Docker
 - Kubernetes
