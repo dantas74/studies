@@ -26,7 +26,6 @@ class ListingController extends Controller
 
         $query = Listing::latest('created_at');
 
-
         return inertia('Listing/Index', [
             'filters' => $filters,
             'listings' => $query
