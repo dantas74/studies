@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,7 @@ class UserAccountController extends Controller
         );
 
         Auth::login($user);
+        event(new Registered($user));
 
         return redirect()->route('listing.index')->with('success', 'Account was created');
     }

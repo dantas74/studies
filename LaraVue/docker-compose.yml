@@ -37,6 +37,11 @@ services:
     ports:
       - "8080:8080"
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+
   composer:
     image: composer/composer:2.5.4
     working_dir: /var/www/app

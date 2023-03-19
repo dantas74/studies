@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Eloquent;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,14 +51,11 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @property-read Collection<int, \App\Models\Listing> $listings
- * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
- * @property-read Collection<int, \App\Models\Offer> $offers
+ * @property-read Collection<int, Offer> $offers
  * @property-read int|null $offers_count
- * @property-read Collection<int, PersonalAccessToken> $tokens
  * @mixin Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
