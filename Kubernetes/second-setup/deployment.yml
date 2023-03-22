@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: story-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: story-app
+  template:
+    metadata:
+      labels:
+        app: story-app
+    spec:
+      containers:
+        - name: story-app
+          image: matheusdr/kub-first-app:volumes
+          imagePullPolicy: Always
+          env:
+            - name: STORY_FOLDER
+              # value: story
+              valueFrom:
+                configMapKeyRef:
+                  key: folder
+                  name: store-cm
+          volumeMounts:
+            - mountPath: /app/story
+              name: story-volume
+      volumes:
+        - name: story-volume
+          persistentVolumeClaim:
+            claimName: host-pvc
+          # emptyDir: { }
+          # hostPath:
+          # path: /data
+          # type: DirectoryOrCreate
