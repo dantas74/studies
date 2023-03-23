@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-api
+  template:
+    metadata:
+      labels:
+        app: users-api
+    spec:
+      containers:
+        - name: users-api
+          image: matheusdr/kub-first-app:users-api
+          imagePullPolicy: Always
+          env:
+            - name: AUTH_ADDRESS
+              value: auth-svc.default
