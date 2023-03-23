@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: second-app-service
+  labels:
+    group: example
+spec:
+  selector: # This selector matches all pods that have the label "app: second-app"
+    app: second-app
+  ports:
+    - appProtocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
