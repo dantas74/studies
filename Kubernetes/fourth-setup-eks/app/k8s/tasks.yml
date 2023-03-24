@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks-api-svc
+spec:
+  selector:
+    app: tasks-api
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks-api-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tasks-api
+  template:
+    metadata:
+      labels:
+        app: tasks-api
+    spec:
+      containers:
+        - name: tasks
+          image: matheusdr/kub-first-app:tasks-api-v2
+          imagePullPolicy: Always
+          env:
+            - name: MONGODB_CONNECTION_URI
+              value: mongodb://root:root@mongodb-svc.default:27017/users?retryWrites=true&w=majority
+            - name: AUTH_API_ADDRESS
+              value: auth-service.default:3000

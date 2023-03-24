@@ -1,4 +1,31 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: users-efs-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-59d14521
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: users-efs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: users-service
@@ -31,5 +58,12 @@ spec:
           env:
             - name: MONGODB_CONNECTION_URI
               value: mongodb://root:root@mongodb-svc.default:27017/users?retryWrites=true&w=majority
-            - name: AUTH_API_ADDRESSS
+            - name: AUTH_API_ADDRESS
               value: auth-service.default:3000
+          volumeMounts:
+            - mountPath: /app/users
+              name: efs-vol
+      volumes:
+        - name: efs-vol
+          persistentVolumeClaim:
+            claimName: users-efs-pvc
