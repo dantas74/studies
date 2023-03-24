@@ -7,6 +7,14 @@ spec:
     storage: 1Gi
   volumeMode: Filesystem
   storageClassName: standard
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-type
+              operator: In
+              values:
+                - fixed
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -19,6 +27,7 @@ metadata:
   name: mongodb-pvc
 spec:
   volumeName: mongodb-pv
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
@@ -66,10 +75,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: kubernetes.io/hostname
+                  - key: node-type
                     operator: In
                     values:
-                      - minikube
+                      - fixed
       containers:
         - name: mongodb
           image: mongo:2.8.0
@@ -77,6 +86,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: mongo-cm
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongodb-vol
       volumes:
         - name: mongodb-vol
           persistentVolumeClaim:

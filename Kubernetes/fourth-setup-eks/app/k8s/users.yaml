@@ -8,7 +8,7 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 3000
 ---
 apiVersion: apps/v1
@@ -27,9 +27,9 @@ spec:
     spec:
       containers:
         - name: users-api
-          image: matheusdr/kub-first-app:users-api
+          image: matheusdr/kub-first-app:users-api-v2
           env:
             - name: MONGODB_CONNECTION_URI
-              value: mongodb://root:root@mongodb-svc.default/users?retryWrites=true&w=majority
+              value: mongodb://root:root@mongodb-svc.default:27017/users?retryWrites=true&w=majority
             - name: AUTH_API_ADDRESSS
-              value: 'auth-service.default:3000'
+              value: auth-service.default:3000

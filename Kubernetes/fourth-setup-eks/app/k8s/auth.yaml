@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: matheusdr/kub-first-app:auth-api
+          image: matheusdr/kub-first-app:auth-api-v2
           env:
             - name: TOKEN_KEY
               value: 'shouldbeverysecure'
