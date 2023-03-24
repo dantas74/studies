@@ -1,8 +1,10 @@
 provider "aws" {
-  region = "us-east-2"
-  
+  region = var.aws_region
+
   default_tags {
-    Project    = "testes-eks"
-    Maintainer = "matheus-dr"
+    tags = {
+      Project    = "testes-eks"
+      Maintainer = "matheus-dr"
+    }
   }
 }
