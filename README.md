@@ -12,7 +12,6 @@ hope you enjoy and also can have an idea on making your on stack
 - Jenkins
 - Docker
 - Kubernetes
-- Linux
 - Terraform
 - Ansible
 - AWS
