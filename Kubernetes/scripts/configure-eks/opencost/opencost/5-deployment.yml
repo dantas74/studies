@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opencost
+  labels:
+    app: opencost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opencost
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: opencost
+    spec:
+      restartPolicy: Always
+      serviceAccountName: opencost
+      containers:
+        - image: quay.io/kubecost1/kubecost-cost-model:latest
+          name: opencost
+          resources:
+            requests:
+              cpu: 10m
+              memory: 55Mi
+            limits:
+              cpu: 999m
+              memory: 1Gi
+          env:
+            - name: PROMETHEUS_SERVER_ENDPOINT
+              value: http://my-prometheus-server.prometheus # The endpoint should have the form http://<service-name>.<namespace-name>.svc
+          imagePullPolicy: Always
+        - image: quay.io/kubecost1/opencost-ui:latest
+          name: opencost-ui
+          resources:
+            requests:
+              cpu: 10m
+              memory: 55Mi
+            limits:
+              cpu: 999m
+              memory: 1Gi
+          imagePullPolicy: Always
