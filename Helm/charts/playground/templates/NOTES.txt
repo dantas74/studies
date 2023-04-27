@@ -1,0 +1,56 @@
+The name of this chart is {{ .Chart.Name }}, its version is {{ .Chart.Version }}, and the bundled application version is {{ .Chart.AppVersion }}
+
+The release name is {{ .Release.Name }} and it will be installed to the {{ .Release.Namespace }} namespace
+
+Is this a new installation? {{ .Release.IsInstall }}
+Is this a upgrade? {{ .Release.IsUpgrade }}
+
+The version of Kubernetes running on this cluster is {{ .Capabilities.KubeVersion }}
+
+tests in NOTES:
+resources:
+  {{- toYaml .Values.resources | indent 2 }}
+
+resources:
+  {{- toYaml .Values.resources | nindent 2 }}
+
+########################### IF and Conditionals ###############################
+eq: equal to
+gt: greater than
+lt: lesser than
+ge: greater than or equal
+le: lesser than or equal
+and
+or
+not
+fail: fail the chart execution and provide an error message
+
+
+{{- if eq .Values.service.type "ClusterIP" -}}
+  The service type is ClusterIP
+{{- else if eq .Values.service.type "NodePort" -}}
+  The service type is NodePort
+{{- else if eq .Values.service.type "LoadBalancer" -}}
+  The service type is LoadBalancer
+{{- else -}}
+  The service type is invalid
+{{- end -}}
+
+# This will not work
+#{- if and eq .Values.service.type "ClusterIP" .Values.ingress.enabled -}}
+#  The service type is ClusterIP and Ingress is enabled
+#{- end -}}
+
+# This will work
+{{- if and (eq .Values.service.type "ClusterIP") .Values.ingress.enabled -}}
+  The service type is ClusterIP and Ingress is enabled
+{{- end -}}
+
+{{- if not .Values.important -}}
+{{- fail "Please provide the important value" -}}
+{{- end -}}
+
+{{- if lt (.Capabilities.KubeVersion.Minor | int) 23 -}}
+{{- fail "This chart requires Kubernetes version 1.23 or higher" -}}
+{{- end -}}
+

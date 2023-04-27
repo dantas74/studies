@@ -1,15 +1,23 @@
+{{- $ports := .Values.service.ports -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "myapp.fullname" . }}
   labels:
     {{- include "myapp.labels" . | nindent 4 }}
+  annotations:
+    mainPort: "{{ (index $ports 0).number }}"
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    {{- range $key, $value := $ports }}
+    {{- if and (eq ($value.number | int) 8080) (eq $value.name "admin") }}
+      {{- fail "Please provide another port number than 8080 for the admin port" -}}
+    {{- end }}
+    - port: {{ .number }}
       protocol: TCP
-      name: http
+      targetPort: {{ .targetPort }}
+      name: {{ .name }}
+  {{- end }}
   selector:
     {{- include "myapp.selectorLabels" . | nindent 4 }}
