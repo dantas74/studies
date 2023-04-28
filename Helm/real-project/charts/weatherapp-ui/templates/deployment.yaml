@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "myapp.fullname" . }}
+  name: {{ include "weatherapp-ui.fullname" . }}
   labels:
-    {{- include "myapp.labels" . | nindent 4 }}
+    {{- include "weatherapp-ui.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "myapp.selectorLabels" . | nindent 6 }}
+      {{- include "weatherapp-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "myapp.selectorLabels" . | nindent 8 }}
+        {{- include "weatherapp-ui.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "myapp.serviceAccountName" . }}
+      serviceAccountName: {{ include "weatherapp-ui.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -32,17 +32,16 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: "{{ include "libpolicy.imagePullPolicy" . }}"
-          volumeMounts:
-            name: config
-            mountPath: /app/config/default.json
-            subPath: default.json
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: APIKEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "myapp.fullname" . }}
-                  key: APIKEY
+            - name: AUTH_HOST
+              value: default.weatherapp-auth
+            - name: AUTH_PORT
+              value: "8080"
+            - name: WEATHER_HOST
+              value: default.weatherapp-weather
+            - name: WEATHER_PORT
+              value: "5000"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -69,8 +68,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: config
-          configMap:
-            name: {{ include "myapp.fullname" . }}
-

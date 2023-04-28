@@ -4,5 +4,19 @@ metadata:
   name: {{ include "myapp.fullname" . }}
 data:
   #  default.json: |
-  #{{ .Files.Get "default.json" | indent 4 }}
-{{ (.Files.Glob "config/*").AsConfig | indent 4 }}
+  # { .Files.Get "default.json" | indent 4 }}
+  # { (.Files.Glob "config/*").AsConfig | indent 4 }}
+  default.json: |
+    {
+      "network": {
+        "port": "80"
+      },
+      "environment": {
+        "SSL": false
+      },
+      "redis": {
+        "server": "{{ .Release.Name }}-redis-master",
+        "port": "6379"
+      }
+    }
+
