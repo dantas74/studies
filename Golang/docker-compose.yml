@@ -14,18 +14,51 @@ services:
     networks:
       - golang
 
+  auth:
+    build:
+      context: auth
+      dockerfile: docker/Dockerfile
+    restart: always
+    ports:
+      - "3000:80"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      DSN: "host=postgres port=5432 user=postgres password=postgres dbname=users sslmode=disable timezone=UTC connect_timeout=5"
+    networks:
+      - golang
+
   web:
     build:
       context: frontend
       dockerfile: docker/Dockerfile
     restart: always
     ports:
-      - "5000:5000"
+      - "5000:80"
     deploy:
       mode: replicated
       replicas: 1
     networks:
       - golang
+
+  postgres:
+    image: postgres:15-alpine3.17
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - golang
+
+volumes:
+  db-data: { }
 
 networks:
   golang: { }

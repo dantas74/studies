@@ -1,7 +1,4 @@
-FRONT_END_BINARY=front-app
-BROKER_BINARY=broker-app
-
-up:
+app_up:
 	@echo "Starting Docker images..."
 	docker compose up -d
 	@echo "Docker images started!"
@@ -13,8 +10,7 @@ up_build:
 	docker compose up --build -d
 	@echo "Docker images built and started!"
 
-down:
+app_down:
 	@echo "Stopping docker compose..."
 	docker compose down
 	@echo "Done!"
-
