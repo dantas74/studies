@@ -3,6 +3,7 @@ package controllers
 import (
 	"auth/models"
 	"auth/shared/helpers"
+	"auth/shared/types"
 	"errors"
 	"fmt"
 	"net/http"
@@ -36,7 +37,12 @@ func (u UserController) Authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseData := helpers.JsonResponse{
+	_, err = helpers.MakeRequest("http://logger/log-entries", http.MethodPost, types.LogPayload{
+		Name: "authentication",
+		Data: fmt.Sprintf("%s logged in", payload.Email),
+	})
+
+	responseData := types.JsonResponse{
 		Error:   false,
 		Message: fmt.Sprintf("Logged in user %s", user.Email),
 		Data:    user,
@@ -69,7 +75,7 @@ func (u UserController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseData := helpers.JsonResponse{
+	responseData := types.JsonResponse{
 		Error:   false,
 		Message: "Successfully changed your password",
 	}

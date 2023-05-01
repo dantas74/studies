@@ -1,13 +1,18 @@
 package helpers
 
 import (
-	"auth/shared/types"
 	"encoding/json"
 	"errors"
 	"io"
 	"log"
 	"net/http"
 )
+
+type JsonResponse struct {
+	Error   bool   `json:"error"`
+	Message string `json:"message"`
+	Data    any    `json:"data,omitempty"`
+}
 
 func ReadJson(w http.ResponseWriter, r *http.Request, data any) error {
 	maxBytes := 1048576 // 1Mi
@@ -56,7 +61,7 @@ func ErrorJson(w http.ResponseWriter, err error, status ...int) {
 		statusCode = status[0]
 	}
 
-	var payload types.JsonResponse
+	var payload JsonResponse
 	payload.Error = true
 	payload.Message = err.Error()
 
